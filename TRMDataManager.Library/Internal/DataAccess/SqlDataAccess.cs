@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Dapper;
 
-namespace TRMDataManager.Library
+namespace TRMDataManager.Library.Internal.DataAccess
 {
-    public class SqlDataAccess
+    internal class SqlDataAccess
     {
         public string GetConnectionString(string name)
         {
