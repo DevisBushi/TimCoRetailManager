@@ -18,14 +18,14 @@ namespace TRMDesktopUI.ViewModels
             }
         }
 
-        private string _itemQuanity;
+        private int _itemQuantity;
 
-        public string ItemQuantity
+        public int ItemQuantity
         {
-            get { return _itemQuanity; }
+            get { return _itemQuantity; }
             set
             {
-                _itemQuanity = value;
+                _itemQuantity = value;
                 NotifyOfPropertyChange(() => ItemQuantity);
 
             }
