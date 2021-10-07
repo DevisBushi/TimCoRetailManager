@@ -33,9 +33,11 @@
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Items"/>
         <ListBox x:Name="Products" Grid.Row="2" Grid.Column="0" 
                  Grid.RowSpan="3" MinHeight="200" MinWidth="150">
-            <DataTemplate>
-                <TextBlock Text="{Binding ProductName}"/>
-            </DataTemplate>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding ProductName}"/>
+                    </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
 
         <!--Column 1 -->
