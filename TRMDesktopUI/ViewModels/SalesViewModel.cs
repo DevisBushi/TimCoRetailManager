@@ -1,13 +1,35 @@
 ﻿using Caliburn.Micro;
 using System.ComponentModel;
+using System.Threading.Tasks;
+using TRMDesktopUI.Library.Api;
+using TRMDesktopUI.Library.Models;
 
 namespace TRMDesktopUI.ViewModels
 {
     public class SalesViewModel : Screen
     {
-        private BindingList<string> _products;
+        private readonly IProductEndpoint _productEndpoint;
 
-        public BindingList<string> Products
+        public SalesViewModel(IProductEndpoint productEndpoint)
+        {
+            _productEndpoint = productEndpoint;
+
+        }
+
+        protected override async void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+            await LoadProducts();
+        }
+
+        private async Task LoadProducts()
+        {
+            var productList = await _productEndpoint.GetAll();
+            Products = new BindingList<ProductModel>(productList);
+        }
+        private BindingList<ProductModel> _products;
+
+        public BindingList<ProductModel> Products
         {
             get { return _products; }
             set
@@ -31,9 +53,9 @@ namespace TRMDesktopUI.ViewModels
             }
         }
 
-        private BindingList<string> _cart;
+        private BindingList<ProductModel> _cart;
 
-        public BindingList<string> Cart
+        public BindingList<ProductModel> Cart
         {
             get { return _cart; }
             set
