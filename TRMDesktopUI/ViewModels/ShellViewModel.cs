@@ -9,17 +9,16 @@ namespace TRMDesktopUI.ViewModels
     {
         private readonly IEventAggregator _events;
         private readonly SalesViewModel _salesVm;
-        private readonly SimpleContainer _container;
 
-        public ShellViewModel(IEventAggregator events, SalesViewModel salesVM, SimpleContainer container)
+
+        public ShellViewModel(IEventAggregator events, SalesViewModel salesVM)
         {
             _events = events;
             _salesVm = salesVM;
-            _container = container;
 #pragma warning disable CS0618 // Type or member is obsolete
             _events.Subscribe(this);
 #pragma warning restore CS0618 // Type or member is obsolete
-            ActivateItemAsync(_container.GetInstance<LoginViewModel>());
+            ActivateItemAsync(IoC.Get<LoginViewModel>());
 
 
         }
