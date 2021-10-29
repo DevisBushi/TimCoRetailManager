@@ -235,17 +235,17 @@ namespace TRMDesktopUI.ViewModels
         {
             // TODO Create SaleModel and post to API
 
-            SaleModel sale = new SaleModel();
+            SaleModel saleInfo = new SaleModel();
             foreach (var item in Cart)
             {
-                sale.SaleDetails.Add(new SaleDetailModel
+                saleInfo.SaleDetails.Add(new SaleDetailModel
                 {
                     ProductId = item.Product.Id,
                     Quantity = item.QuantityInCart
                 });
             }
 
-           await _saleEndpoint.PostSale(sale);
+           await _saleEndpoint.PostSale(saleInfo);
 
         }
         

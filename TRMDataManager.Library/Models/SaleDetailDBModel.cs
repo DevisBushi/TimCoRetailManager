@@ -8,6 +8,7 @@ namespace TRMDataManager.Library.Models
 {
     public class SaleDetailDBModel
     {
+        public int Id { get; set; }
         public int SaleId { get; set; }
         public int ProductId { get; set; }
         public int Quantity { get; set; }
