@@ -4,6 +4,6 @@
 AS
 begin
 	set nocount on;
-	Select Id from dbo.Sale
+	select Id from dbo.Sale
 	where CashierId = @CashierId and SaleDate = @SaleDate;
 end

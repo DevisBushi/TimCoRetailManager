@@ -58,7 +58,7 @@ namespace TRMDataManager.Library.DataAccess
 
             // Save the sale model
             SqlDataAccess sql = new SqlDataAccess();
-            sql.SaveData("dbo.spSale_Insert", sale, "TRMData");
+            sql.SaveData<SaleDBModel>("dbo.spSale_Insert", sale, "TRMData");
             // Get the ID from the sale model
             sale.Id = sql.LoadData<int, dynamic>("spSale_Lookup", new {sale.CashierId, sale.SaleDate},"TRMData").FirstOrDefault();
             // Finish filling in the sale detail models
