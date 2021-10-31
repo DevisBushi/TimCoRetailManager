@@ -65,6 +65,18 @@ namespace TRMDesktopUI.ViewModels
             }
         }
 
+        private CartItemDisplayModel _selectedCartItem;
+
+        public CartItemDisplayModel SelectedCartItem
+        {
+            get { return _selectedCartItem; }
+            set
+            {
+                _selectedCartItem = value;
+                NotifyOfPropertyChange(() => SelectedCartItem);
+                NotifyOfPropertyChange(() => CanRemoveFromCart);
+            }
+        }
 
         private int _itemQuantity = 1;
 
@@ -128,13 +140,6 @@ namespace TRMDesktopUI.ViewModels
             taxAmount = Cart
                 .Where(x => x.Product.IsTaxable)
                 .Sum(x => x.Product.RetailPrice * x.QuantityInCart * taxRate);
-            //foreach (var item in Cart)
-            //{
-            //    if (item.Product.IsTaxable)
-            //    {
-            //        taxAmount += (item.Product.RetailPrice * item.QuantityInCart * (taxRate));
-            //    }
-            //}
 
             return taxAmount;
         }
@@ -202,7 +207,10 @@ namespace TRMDesktopUI.ViewModels
 
 
                 // TODO - Make sure something is Selected
-
+                if (SelectedCartItem != null )
+                {
+                    output = true;
+                }
 
                 return output;
             }
@@ -211,6 +219,18 @@ namespace TRMDesktopUI.ViewModels
 
         public void RemoveFromCart()
         {
+
+            SelectedCartItem.Product.QuantityInStock += 1;
+
+            if (SelectedCartItem.QuantityInCart > 1)
+            {
+                SelectedCartItem.QuantityInCart -= 1;
+
+            }
+            else
+            {
+                Cart.Remove(SelectedCartItem);
+            }
             NotifyOfPropertyChange(() => SubTotal);
             NotifyOfPropertyChange(() => Tax);
             NotifyOfPropertyChange(() => Total);
