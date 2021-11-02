@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using TRMDesktopUI.EventModels;
+using TRMDesktopUI.Library.Api;
 using TRMDesktopUI.Library.Models;
 
 namespace TRMDesktopUI.ViewModels
@@ -11,13 +12,14 @@ namespace TRMDesktopUI.ViewModels
         private readonly IEventAggregator _events;
         private readonly SalesViewModel _salesVm;
         private readonly ILoggedInUserModel _user;
+        private readonly IAPIHelper _apiHelper;
 
-
-        public ShellViewModel(IEventAggregator events, SalesViewModel salesVM, ILoggedInUserModel user)
+        public ShellViewModel(IEventAggregator events, SalesViewModel salesVM, ILoggedInUserModel user, IAPIHelper apiHelper)
         {
             _events = events;
             _salesVm = salesVM;
             _user = user;
+            _apiHelper = apiHelper;
 #pragma warning disable CS0618 // Type or member is obsolete
             _events.Subscribe(this);
 #pragma warning restore CS0618 // Type or member is obsolete
@@ -52,6 +54,7 @@ namespace TRMDesktopUI.ViewModels
         public void LogOut()
         {
             _user.LogOffUser();
+            _apiHelper.LogOffUser();
             ActivateItemAsync(IoC.Get<LoginViewModel>());
             NotifyOfPropertyChange(() => IsLoggedIn);
         }
