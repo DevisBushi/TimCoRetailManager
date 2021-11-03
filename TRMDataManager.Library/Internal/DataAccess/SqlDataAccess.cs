@@ -46,23 +46,44 @@ namespace TRMDataManager.Library.Internal.DataAccess
             _connection = new SqlConnection(connectionString);
             _connection.Open();
             _transaction = _connection.BeginTransaction();
+
+            isClosed = false;
         }
+
+        private bool isClosed = false;
 
         public void CommitTransaction()
         {
             _transaction?.Commit();
             _connection?.Close();
+
+            isClosed = true;
         }
 
         public void RollbackTransaction()
         {
             _transaction?.Rollback();
             _connection?.Close();
+
+            isClosed = true;
         }
 
         public void Dispose()
         {
-            CommitTransaction();
+            if (isClosed == false)
+            {
+                try
+                {
+                    CommitTransaction();
+                }
+                catch
+                {
+                   // TODO - log this issue
+                }
+            }
+
+            _transaction = null;
+            _connection = null;
         }
         // load using the transaction
         public List<T> LoadDataInTransaction<T, U>(string storedProcedure, U parameters)
