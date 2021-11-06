@@ -9,7 +9,7 @@ using TRMDataManager.Library.Models;
 
 namespace TRMDataManager.Controllers
 {
-    [Authorize (Roles= "Manager")]
+    [Authorize (Roles= "Admin")]
     public class ProductController : ApiController
     {
         [HttpGet]
