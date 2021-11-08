@@ -66,12 +66,13 @@
     <Compile Include="Models\SaleDetailModel.cs" />
     <Compile Include="Models\SaleModel.cs" />
     <Compile Include="Models\UserModel.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
