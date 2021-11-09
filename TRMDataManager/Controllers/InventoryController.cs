@@ -12,6 +12,10 @@ namespace TRMDataManager.Controllers
     [Authorize]
     public class InventoryController : ApiController
     {
+        public InventoryController(IConfiguration)
+        {
+            
+        }
         [Authorize(Roles = "Manager,Admin")]
         public List<InventoryModel> Get()
         {
