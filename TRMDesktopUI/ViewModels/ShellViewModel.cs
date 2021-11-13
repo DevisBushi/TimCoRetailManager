@@ -10,19 +10,18 @@ namespace TRMDesktopUI.ViewModels
     public class ShellViewModel : Conductor<object>, IHandle<LogOnEvent>
     {
         private readonly IEventAggregator _events;
-        private readonly SalesViewModel _salesVm;
         private readonly ILoggedInUserModel _user;
         private readonly IAPIHelper _apiHelper;
 
-        public ShellViewModel(IEventAggregator events, SalesViewModel salesVM, ILoggedInUserModel user, IAPIHelper apiHelper)
+        public ShellViewModel(
+            IEventAggregator events,
+            ILoggedInUserModel user,
+            IAPIHelper apiHelper)
         {
             _events = events;
-            _salesVm = salesVM;
             _user = user;
             _apiHelper = apiHelper;
-#pragma warning disable CS0618 // Type or member is obsolete
-            _events.Subscribe(this);
-#pragma warning restore CS0618 // Type or member is obsolete
+            _events.SubscribeOnPublishedThread(this);
             ActivateItemAsync(IoC.Get<LoginViewModel>());
 
         }
@@ -56,17 +55,17 @@ namespace TRMDesktopUI.ViewModels
             ActivateItemAsync(IoC.Get<UserDisplayViewModel>());
         }
 
-        public void LogOut()
+        public async Task LogOut()
         {
             _user.ResetUserModel();
             _apiHelper.LogOffUser();
-            ActivateItemAsync(IoC.Get<LoginViewModel>());
+            await ActivateItemAsync(IoC.Get<LoginViewModel>());
             NotifyOfPropertyChange(() => IsLoggedIn);
         }
         
         public async Task HandleAsync(LogOnEvent message, CancellationToken cancellationToken)
         {
-            await ActivateItemAsync(_salesVm);
+            await ActivateItemAsync(IoC.Get<SalesViewModel>(), cancellationToken);
             NotifyOfPropertyChange(() => IsLoggedIn);
         }
     }
