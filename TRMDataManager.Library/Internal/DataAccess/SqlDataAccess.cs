@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace TRMDataManager.Library.Internal.DataAccess
 {
-    internal class SqlDataAccess : IDisposable
+    public class SqlDataAccess : ISqlDataAccess, IDisposable
     {
         private readonly IConfiguration _config;
 

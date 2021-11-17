@@ -319,7 +319,7 @@ namespace TRMDesktopUI.ViewModels
             }
 
            await _saleEndpoint.PostSale(saleInfo);
-           await ResetSalesViewModel();
+           //await ResetSalesViewModel();
 
         }
         
